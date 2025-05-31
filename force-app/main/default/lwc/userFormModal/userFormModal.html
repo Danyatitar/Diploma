@@ -1,0 +1,118 @@
+<template>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Header -->
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title slds-hyphenate">
+                        {modalTitle}
+                    </h2>
+                </header>
+
+                <!-- Body -->
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-input 
+                    label="Full Name" 
+                    name="Name" 
+                    value={user.Name} 
+                    onchange={handleChange} 
+                    required>
+                </lightning-input>
+                
+                <!-- Email -->
+                <lightning-input 
+                    label="Email" 
+                    name="mtime__Email__c" 
+                    value={user.mtime__Email__c} 
+                    onchange={handleChange} 
+                    required>
+                </lightning-input>
+                
+                <!-- Phone -->
+                <lightning-input 
+                    label="Phone" 
+                    name="mtime__Phone__c" 
+                    value={user.mtime__Phone__c} 
+                    onchange={handleChange} 
+                    required>
+                </lightning-input>
+                
+                <template if:true={canModify}>
+                <!-- Role -->
+                    <lightning-input 
+                        label="Role" 
+                        name="mtime__Role__c" 
+                        value={user.mtime__Role__c} 
+                        onchange={handleChange} 
+                        required>
+                    </lightning-input>
+                    
+                    <!-- HR -->
+                    <lightning-combobox
+                        label="HR"
+                        name="mtime__HR__c"
+                        value={user.mtime__HR__c}
+                        options={hrOptions}
+                        onchange={handleChange}
+                        required>
+                    </lightning-combobox>
+                    
+                    <!-- Manager -->
+                    <lightning-combobox
+                        label="Manager"
+                        name="mtime__Manager__c"
+                        value={user.mtime__Manager__c}
+                        options={managerOptions}
+                        onchange={handleChange}
+                        required>
+                    </lightning-combobox>
+                    
+                    <!-- First Working Date -->
+                    <lightning-input 
+                        label="First Working Date" 
+                        name="mtime__FirstWorkingDate__c" 
+                        type="date" 
+                        value={user.mtime__FirstWorkingDate__c} 
+                        onchange={handleChange} 
+                        required>
+                    </lightning-input>
+                    
+                    <!-- Level -->
+                    <lightning-combobox
+                        label="Level"
+                        name="mtime__Level__c"
+                        value={user.mtime__Level__c}
+                        options={levelOptions}
+                        onchange={handleChange}
+                        required>
+                    </lightning-combobox>
+                    
+                    <!-- English Level -->
+
+                        <lightning-combobox
+                        label="English Level"
+                        name="mtime__EnglishLevel__c"
+                        value={user.mtime__EnglishLevel__c}
+                        options={englishOptions}
+                        onchange={handleChange}
+                        required>
+                        </lightning-combobox>
+                
+
+
+                        <lightning-input label="Is HR" name="mtime__IsHR__c" type="checkbox" checked={user.mtime__IsHR__c} onchange={handleChange}></lightning-input>
+                        <lightning-input label="Is Manager" name="mtime__IsManager__c" type="checkbox" checked={user.mtime__IsManager__c} onchange={handleChange}></lightning-input>
+
+                    </template>
+                </div>
+
+                <!-- Footer -->
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
+                    <lightning-button variant="brand" label="Save" onclick={handleSave}></lightning-button>
+                </footer>
+            </div>
+        </section>
+
+        <!-- Backdrop -->
+        <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

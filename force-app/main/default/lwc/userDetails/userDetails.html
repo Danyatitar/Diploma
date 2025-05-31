@@ -1,0 +1,49 @@
+<template>
+    <lightning-card class="user-card">
+        <div class="profile-section">
+            <img src={userImage} alt="User" class="avatar" />
+            <h2>{fullName}</h2>
+            <p class="role">{role}</p>
+
+            <div class="contact">
+                <p><strong>Phone:</strong> {phone}</p>
+                <p><strong>Email:</strong> {email}</p>
+            </div>
+
+            <!-- <div class="social-icons">
+                <lightning-icon icon-name="utility:link" onclick={navigateToLinkedIn}></lightning-icon>
+                <lightning-icon icon-name="utility:image" onclick={navigateToInstagram}></lightning-icon>
+            </div> -->
+        </div>
+
+
+        <div class="career-details">
+            <template for:each={careerDetails} for:item="detail">
+                <div key={detail.label} class="career-block">
+                    <lightning-icon icon-name={detail.icon} size="small"></lightning-icon>
+                    <div>
+                        <p class="label"><strong>{detail.label}</strong></p>
+                        <p class="value">{detail.value}</p>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+
+    <template if:true={canModify}>
+        <lightning-button variant="neutral" label="Edit" onclick={openModal}></lightning-button>
+    </template>
+
+
+    <template if:true={isModalOpen}>
+        <c-user-form-modal
+            record-id={recordId}
+            current-user-id={currentUserId}
+            is-h-r={isHR}
+            onclose={handleModalClose}
+            onconfirm={handleModalConfirm}>
+        </c-user-form-modal>
+    </template>
+
+
+</template>

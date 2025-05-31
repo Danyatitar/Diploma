@@ -1,0 +1,68 @@
+<template>
+    <template if:true={isOpen}>
+        <section role="dialog" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container custom-modal">
+
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-modal__close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="Close" size="small"></lightning-icon>
+                    </button>
+                    <h2 class="slds-text-heading_medium">
+                        New Report for<br />
+                        <strong>{formattedDate}</strong>
+                    </h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+
+                <lightning-combobox
+                    label="Project"
+                    value={project}
+                    options={projectOptions}
+                    onchange={handleProjectChange}>
+                </lightning-combobox>
+                
+                <lightning-combobox
+                    label="Task"
+                    value={task}
+                    options={taskOptions}
+                    onchange={handleTaskChange}>
+                </lightning-combobox>
+
+                    <lightning-textarea 
+                        label="Description" 
+                        placeholder="Task description" 
+                        value={description} 
+                        onchange={handleDescriptionChange}
+                    ></lightning-textarea>
+
+                    <div class="time-buttons">
+                        <template for:each={timeOptions} for:item="option">
+                            <lightning-button 
+                                key={option.label} 
+                                label={option.label} 
+                                variant="outline-brand" 
+                                onclick={handleTimeClick}
+                                data-minutes={option.minutes}
+                            ></lightning-button>
+                        </template>
+                    </div>
+
+                    <div class="time-display">
+                        <div class="time-amount">{formattedTime}</div>
+                        <div class="time-controls">
+                            <button class="adjust-button" onclick={increaseTime}>+</button>
+                            <button class="adjust-button" onclick={decreaseTime}>-</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Save" variant="brand" onclick={handleSave}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

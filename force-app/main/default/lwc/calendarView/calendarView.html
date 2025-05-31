@@ -1,0 +1,61 @@
+<template>
+    <div class="controls">
+        <button class="nav-button" onclick={goToPreviousMonth}>&lt;</button>
+        <span class="month-label">{monthName} {selectedYear}</span>
+        <button class="nav-button" onclick={goToNextMonth}>&gt;</button>
+    </div>
+
+    <table class="calendar">
+        <!-- <thead>
+            <tr>
+                <th>Employee</th>
+                <template for:each={daysInMonth} for:item="day">
+                    <th key={day}>{day}</th>
+                </template>
+            </tr>
+        </thead> -->
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <template for:each={daysInMonth} for:item="d">
+                    <th key={d.day} class={d.className}>
+                        <div>{d.dayNumber}</div>
+                        <div>{d.letter}</div>
+                    </th>
+                </template>
+                
+            </tr>
+        </thead>
+        
+        <tbody>
+            <template for:each={employeeData} for:item="emp">
+                <tr key={emp.id}>
+                    <td>
+                        <div>{emp.name}</div>
+                        <div class="role">{emp.role}</div>
+                    </td>
+                    <template for:each={emp.dayStatusList} for:item="ds">
+                        <td key={ds.day} class={ds.status}></td>
+                    </template>
+                </tr>
+            </template>
+        </tbody>
+        
+    </table>
+
+    <div class="legend">
+        <div class="legend-item">
+            <span class="box vacation"></span> Vacation
+        </div>
+        <div class="legend-item">
+            <span class="box dayoff"></span> Day Off
+        </div>
+        <div class="legend-item">
+            <span class="box illness"></span> Illness
+        </div>
+        <div class="legend-item">
+            <span class="box weekend"></span> Weekend
+        </div>
+    </div>
+    
+</template>

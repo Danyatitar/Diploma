@@ -1,0 +1,36 @@
+<template>
+    <lightning-card title="Report Viewer">
+        <div class="slds-p-around_medium">
+            <lightning-combobox
+                label="User"
+                value={selectedUserId}
+                options={userOptions}
+                onchange={handleUserChange}>
+            </lightning-combobox>
+
+            <lightning-input type="date" label="From" value={fromDate} onchange={handleFromDateChange}></lightning-input>
+            <lightning-input type="date" label="To" value={toDate} onchange={handleToDateChange}></lightning-input>
+        </div>
+
+        <template if:true={groupedReports}>
+            <div class="slds-p-horizontal_medium slds-text-heading_small slds-m-bottom_small">
+                Total Hours for Selected Period: <strong>{totalPeriodHours}</strong>
+            </div>
+
+            <lightning-accordion allow-multiple-sections-open>
+                <template for:each={groupedReports} for:item="project">
+                    <lightning-accordion-section name={project.projectName} label={project.projectName} key={project.projectName}>
+                        <template for:each={project.taskTypes} for:item="task">
+                            <div key={task.name} class="slds-p-vertical_x-small">
+                                <strong>{task.name}:</strong> {task.hours} hours
+                            </div>
+                        </template>
+                        <div class="slds-p-top_medium slds-border_top">
+                            <strong>Total:</strong> {project.totalHours} hours
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+            </lightning-accordion>
+        </template>
+    </lightning-card>
+</template>

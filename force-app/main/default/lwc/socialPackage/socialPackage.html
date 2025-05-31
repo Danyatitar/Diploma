@@ -1,0 +1,195 @@
+<template>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="user-picklist">
+                <label class="switch-label">Switch user</label>
+                <lightning-combobox
+                    value={currentUserId}
+                    options={userOptions}
+                    onchange={handleUserChange}
+                >            </lightning-combobox>
+
+            </div>
+           
+            <div class="date-range">
+                <!-- Working Year Range -->
+                 <div class="date-range year-navigator">
+                     <lightning-button-icon
+                         icon-name="utility:chevronleft"
+                         onclick={handlePreviousYear}
+                         alternative-text="Previous Year"
+                         variant="bare"
+                         disabled={isFirstYear}>
+                     </lightning-button-icon>
+     
+                     <p class="year-display">Year {displayedYear}</p>
+     
+                     <lightning-button-icon
+                         icon-name="utility:chevronright"
+                         onclick={handleNextYear}
+                         alternative-text="Next Year"
+                         variant="bare"
+                         disabled={isLastYear}>
+                     </lightning-button-icon>
+                 </div>
+     
+             </div>
+        </div>
+
+        <!-- Date Range -->
+       
+
+        <!-- Tabs + Button -->
+         <template if:true={isMe}>
+            <div class="tabs-header">
+                <lightning-button variant="brand" label="NEW TIME OFF REQUEST" onclick={openModal}></lightning-button>
+                <lightning-button variant="brand" label="NEW COMPENSATION REQUEST" onclick={openCompensationModal}></lightning-button>
+            </div>
+         </template>
+       
+
+        <!-- Summary Cards -->
+        <div class="cards">
+            <div class="card">
+                <p class="card-title">Vacation</p>
+                <p class="value green">{remainingVacations} days</p>
+                <p class="value red">{usedVacations} days used</p>
+            </div>
+            <div class="card">
+                <p class="card-title">Illness</p>
+                <p class="value green">{remainingIllness} days</p>
+                <p class="value red">{usedIllness} days used</p>
+            </div>
+            <div class="card">
+                <p class="card-title">Day Off</p>
+                <p class="value green">{remainingDayOff} days</p>
+                <p class="value red">{usedDayOff} days used</p>
+            </div>
+            <div class="card">
+                <p class="card-title">Education</p>
+                <p class="value green">{remainingBudget} USD</p>
+                <p class="value red">{usedBudget} USD used</p>
+            </div>
+        </div>
+
+        <!-- Sub Tabs -->
+        <div class="sub-tabs">
+            <div class="sub-tab active">TIME OFF</div>
+        </div>
+
+        <!-- Time Off Table -->
+        <table class="time-off-table">
+            <thead>
+                <tr>
+                    <th>REQUEST TYPE</th>
+                    <th>DURATION</th>
+                    <th>DAY(S)</th>
+                    <th>STATUS</th>
+                    <template if:true={canApproveTimeOff}>
+                        <th>ACTIONS</th>
+                    </template>
+
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={timeOffRequests} for:item="row">
+                    <tr key={row.id}>
+                        <td>{row.type}</td>
+                        <td>{row.duration}</td>
+                        <td>{row.days}</td>
+                        <td>
+                            <span class={row.statusClass}>{row.status}</span>
+                        </td>
+                        <template if:true={canApproveTimeOff}>
+
+                            <template if:true={row.displayActions}>
+                                <td>
+                                    <lightning-button variant="success" label="Approve" onclick={handleApprove} data-id={row.id}></lightning-button>
+                                    <lightning-button variant="destructive" label="Decline" onclick={handleDecline} data-id={row.id}></lightning-button>
+        
+                                </td>    
+                            </template>
+                        </template>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+        <div class="sub-tabs">
+            <div class="sub-tab active">EDUCATION</div>
+        </div>
+
+        <!-- Compensation Table -->
+
+        <table class="time-off-table">
+            <thead>
+                <tr>
+                    <th>REQUEST TYPE</th>
+                    <th>SUBJECT</th>
+                    <th>DATE</th>
+                    <th>BUDGET</th>
+                    <th>STATUS</th>
+                    <template if:true={canApproveCompensation}>
+                        <th>ACTIONS</th>
+                    </template>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={compensationRequests} for:item="row">
+                    <tr key={row.id}>
+                        <td>{row.type}</td>
+                        <td>{row.subject}</td>
+                        <td>{row.date}</td>
+                        <td>{row.budget}</td>
+
+                        <td>
+                            <span class={row.statusClass}>{row.status}</span>
+                        </td>
+                        <template if:true={canApproveCompensation}>
+                            <template if:true={row.displayActions}>
+                                <td>
+                                    <lightning-button variant="success" label="Approve" onclick={handleApprove} data-id={row.id}></lightning-button>
+                                    <lightning-button variant="destructive" label="Decline" onclick={handleDecline} data-id={row.id}></lightning-button>
+        
+                                </td>    
+                            </template>
+                        </template>
+                        
+                       
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+    
+
+    <template if:true={isCompensationModalOpen}>
+        <c-compensation-modal
+            user-id={selectedUserId}
+            unused-budget={remainingBudget}
+            onclose={handleCompensationModalClose}
+            onsubmit={handleCompensationModalConfirm}>
+        </c-compensation-modal> 
+    </template>
+
+    <template if:true={isModalOpen}>
+        <c-time-off-modal
+            user-id={selectedUserId}
+            vacation-days={remainingVacations}
+            illnesses={remainingIllness}
+            days-off={remainingDayOff}
+            onclose={handleModalClose}
+            onconfirm={handleModalConfirm}>
+        </c-time-off-modal>
+    </template>
+      
+
+
+    <!-- <c-compensation-modal
+        unused-budget={remainingBudget}
+        is-open={isCompensationModalOpen}
+        onclose={handleCompensationModalClose}
+        onsubmit={handleCompensationModalConfirm}>
+    </c-compensation-modal>  -->
+
+</template>

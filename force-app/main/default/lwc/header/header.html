@@ -1,0 +1,16 @@
+<template>
+    <header class="mytime-header slds-p-around_medium slds-grid slds-grid_align-spread slds-align_absolute-center">
+        <div class="slds-grid slds-grid_vertical-align-center">
+            <h1 class="title slds-text-heading_medium slds-m-right_large">MyTime</h1>
+            <nav class="nav-menu slds-grid slds-grid_align-center">
+                <a href="/" class="nav-link slds-m-right_medium">Reports</a>
+                <a href="/salary" class="nav-link slds-m-right_medium">Salary</a>
+                <a href="/users" class="nav-link slds-m-right_medium">Users</a>
+            </nav>
+        </div>
+        <div class="user-controls slds-grid slds-grid_vertical-align-center">
+            <span class="slds-m-right_medium">{userName}</span>
+            <lightning-button label="Log Out" onclick={handleLogout} variant="brand" size="small"></lightning-button>
+        </div>
+    </header>
+</template>

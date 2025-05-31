@@ -1,0 +1,45 @@
+.profile-section {
+    text-align: center;
+    padding: 1rem;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.role {
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+.contact p {
+    margin: 0.3rem 0;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.career-tabs {
+    display: flex;
+    justify-content: space-around;
+    margin: 1rem 0;
+}
+
+.career-details {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.career-block {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}

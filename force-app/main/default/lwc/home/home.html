@@ -1,0 +1,201 @@
+<template>
+    <div class="container">
+        <div class="header">
+            <div class="today-controls">
+                <lightning-button-icon icon-name="utility:left" alternative-text="Previous" onclick={handlePrevious}></lightning-button-icon>
+                <div class="date-title">{selectedDateFormatted}</div>
+                <lightning-button-icon icon-name="utility:right" alternative-text="Next" onclick={handleNext}></lightning-button-icon>
+            </div>
+
+            <template if:true={isManager}> 
+                <lightning-combobox 
+                label="Select User" 
+                value={selectedUserId} 
+                options={userOptions} 
+                onchange={handleUserChange}>
+            </lightning-combobox>
+            </template>
+
+
+
+            <lightning-input 
+            label="date"
+            type="date"
+            class="date-button"
+            onchange={handleDateSelected}>
+        </lightning-input>
+
+        </div>
+
+        <div class="week-grid">
+            <template for:each={weekDays} for:item="day">
+                <template if:true={day.isSelected}>
+                    <div 
+                    key={day.date} 
+                    class="day-cell selected-day"
+                    onclick={handleDayClick} 
+                    data-date={day.date}
+                    >
+                        <div class="day-label">{day.label}</div>
+                        <div class="day-hours">{day.hours}</div>
+                    </div>
+                </template>
+                <template if:false={day.isSelected}>
+                    <div 
+                    key={day.date} 
+                    class="day-cell"
+                    onclick={handleDayClick} 
+                    data-date={day.date}
+                    >
+                        <div class="day-label">{day.label}</div>
+                        <div class="day-hours">{day.hours}</div>
+                    </div>
+                </template>
+
+             
+            </template>
+            <div class="total-cell">
+                <div class="day-label">Total</div>
+                <div class="day-hours">{totalWeekTimeFormatted}/40:00</div>
+            </div>
+
+
+        </div>
+
+        <template if:true={selectedDay.hasReports}>
+            <ul>
+                <template for:each={selectedDay.reports} for:item="report">
+                    <li key={report.Id} class={report.cssClass}>
+                        <div class="no-actions">
+                            <div class="report-info">
+                                <span class="project-title">{report.mtime__Project__r.Name}</span> 
+                                <b>{report.mtime__TaskType__c}</b> 
+                                <p class="description">{report.mtime__Description__c}</p>
+                            </div>
+                            <div class="duration">
+                                {report.mtime__Hours__c}:{report.mtime__Minutes__c}
+                            </div>
+                        </div>
+                       
+                        <template if:false={report.mtime__IsApproved__c}>
+                            <div class="report-actions">
+                                <template if:true={isMe}>
+                                    <button class="slds-button slds-button_brand btn"  
+                                        onclick={openEditReportModal} 
+                                        data-report-id={report.Id}>
+                                        Edit
+                                    </button>
+                                    <button class="slds-button slds-button_destructive btn"  
+                                        label="Edit" 
+                                        onclick={handleDeleteReport} 
+                                        data-report-id={report.Id}>
+                                         Delete
+                                    </button>
+                                    
+                                    <!-- <lightning-button 
+                                    label="Edit" 
+                                    onclick={openEditReportModal} 
+                                    data-report-id={report.Id}
+                                    class="custom-button">
+                                    </lightning-button> -->
+                                    <!-- <lightning-button 
+                                        label="Delete" 
+                                        variant="destructive" 
+                                        onclick={handleDeleteReport} 
+                                        data-report-id={report.Id}
+                                        class="custom-button">
+                                    </lightning-button> -->
+                                </template>
+                               
+                                <template if:true={canApprove}> 
+                                    <lightning-button 
+                                    label="Approve" 
+                                    variant="success" 
+                                    onclick={handleApproveReport} 
+                                    data-report-id={report.Id}>
+                                    </lightning-button>
+                                </template>
+                                
+                            </div>
+                            
+                        </template>
+                        <template if:true={report.IsApproved__c}>
+                            <template if:true={canApprove}> 
+                                <div class="report-actions">
+                                    <lightning-button 
+                                        label="Unblock" 
+                                        variant="neutral" 
+                                        onclick={handleUnblockReport} 
+                                        data-report-id={report.Id}>
+                                    </lightning-button>
+                                </div>
+                            </template>
+                            
+                    
+                        </template>
+                        
+                        
+                    </li>
+                </template>
+            </ul>
+            <div class="day-total">
+                <span class="day-total-text">Total hours today</span>
+                <div class="duration">{selectedDay.totalTimeText}</div>
+
+            </div>
+        </template>
+        <template if:false={selectedDay.hasReports}>
+            <div class="empty-state">
+                No reports for this day.
+            </div>
+        </template>
+
+    </div>
+    <div class="main-actions">
+        <template if:true={isMe}>
+
+            <button class="slds-button slds-button_brand main-btn"  
+                onclick={openCreateReportModal}>
+                    Create Report
+            </button>
+            <!-- <lightning-button
+            label ='Create Report' 
+            variant = 'brand'
+            class="create-report-button"
+            onclick={openCreateReportModal}></lightning-button> -->
+        </template>
+       
+    
+    
+        <template if:true={canApprove}> 
+            <!-- <template if:false={areAllReportsApproved}> -->
+    
+                <button class="slds-button slds-button_neutral main-btn"  
+                        onclick={handleApproveAll}>
+                        Approve All Reports by Week
+                </button>
+                <!-- <lightning-button 
+                    label="Approve All Reports by Week" 
+                    onclick={handleApproveAll}>
+                </lightning-button> -->
+            <!-- </template> -->
+            <!-- <template if:false={areAllReportsApproved}> -->
+    
+                <button class="slds-button slds-button_neutral main-btn"  
+                        onclick={handleUnblockAll}>
+                        Unblock All Reports by Week
+                </button>
+                <!-- <lightning-button 
+                    label="Unblock All Reports by Week" 
+                    onclick={handleUnblockAll}>
+                </lightning-button> -->
+            <!-- </template> -->
+        </template>
+    </div>
+
+    
+   
+   
+    <c-report-pop-up report={selectedReport} user-id={currentUserId} date={selectedDate} is-open={showReportModal} onclose={handleReportClose} onsave={handleReportSave}></c-report-pop-up>
+
+</template>

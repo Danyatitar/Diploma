@@ -1,0 +1,40 @@
+<template>
+    <lightning-card title="Manage Project Members and Task Types">
+        <div class="slds-p-around_medium">
+
+            <!-- User Assignment -->
+            <lightning-dual-listbox
+                name="users"
+                label="Assign Users"
+                source-label="Available Users"
+                selected-label="Assigned Users"
+                options={userOptions}
+                value={selectedUserIds}
+                onchange={handleUserChange}>
+            </lightning-dual-listbox>
+
+            <lightning-button label="Save Assignments" variant="brand" class="slds-m-top_medium" onclick={saveAssignments}></lightning-button>
+
+            <hr class="slds-m-vertical_medium" />
+
+            <!-- Task Type Tags -->
+            <label class="slds-form-element__label">Task Types</label>
+            <template if:true={taskTypes}>
+                <div class="slds-m-bottom_small">
+                    <template for:each={taskTypes} for:item="type" for:index="index">
+                        <span key={type} class="slds-badge slds-theme_success slds-m-right_x-small slds-m-bottom_x-small">
+                            {type}
+                            <lightning-button-icon icon-name="utility:close" variant="bare" size="x-small" class="slds-m-left_x-small" onclick={removeType} data-type={type}></lightning-button-icon>
+                        </span>
+                    </template>
+                </div>
+            </template>
+
+            <lightning-input label="Add Task Type" value={newTaskType} onchange={handleNewTypeChange}></lightning-input>
+            <lightning-button label="Add Type" onclick={addTaskType} class="slds-m-top_small"></lightning-button>
+
+            <lightning-button variant="brand" label="Save Task Types" class="slds-m-top_medium" onclick={saveTaskTypes}></lightning-button>
+
+        </div>
+    </lightning-card>
+</template>

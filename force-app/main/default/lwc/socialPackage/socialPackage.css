@@ -1,0 +1,151 @@
+.container {
+    padding: 1.5rem;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.user-picklist{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.switch-label {
+    font-weight: bold;
+}
+
+.date-range {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.tabs-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.tabs {
+    display: flex;
+    gap: 2rem;
+}
+
+.tab {
+    padding-bottom: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.tab.active {
+    border-bottom: 3px solid #00b7c3;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+    justify-content: space-evenly;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 8px;
+    width: 200px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.1);
+    justify-content: space-evenly;
+}
+
+.card-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.value {
+    margin: 0.2rem 0;
+}
+
+.green {
+    color: #00b7c3;
+}
+
+.red {
+    color: #f44336;
+}
+
+.sub-tabs {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0 0.5rem 0;
+}
+
+.sub-tab {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.sub-tab.active {
+    border-bottom: 3px solid #00b7c3;
+}
+
+.time-off-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+.time-off-table th,
+.time-off-table td {
+    border-bottom: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.badge.approved {
+    background-color: #c8f1ee;
+    color: #00897b;
+}
+
+.badge.pending {
+    background-color: #eee1cc;
+    color: #bcac08;
+}
+.badge.declined {
+    background-color: #fab1b1;
+    color: #eb4848;
+}
+
+.year-navigator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.year-display {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.action-menu {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}

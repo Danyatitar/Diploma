@@ -1,0 +1,47 @@
+<template>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">Request Time Off</h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-combobox
+                        label="Type"
+                        value={selectedType}
+                        options={typeOptions}
+                        onchange={handleTypeChange}>
+                    </lightning-combobox>
+
+                    <lightning-input 
+                        type="date" 
+                        label="Start Date" 
+                        value={startDate} 
+                        onchange={handleFromDateChange} 
+                        min={today}>
+                    </lightning-input>
+
+                    <lightning-input 
+                        type="date" 
+                        label="End Date" 
+                        value={endDate} 
+                        onchange={handleToDateChange} 
+                        min={minEndDate}>
+                    </lightning-input>
+
+                    <p class="slds-m-top_medium">Days: {days}</p>
+                    <p>Unused Days: {unusedDays}</p>
+
+                    <template if:true={errorMessage}>
+                        <p class="slds-text-color_error">{errorMessage}</p>
+                    </template>
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="Cancel" onclick={closeModal}></lightning-button>
+                    <lightning-button variant="brand" label="Request" onclick={confirmRequest} disabled={isInvalid}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

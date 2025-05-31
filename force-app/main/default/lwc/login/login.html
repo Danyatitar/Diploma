@@ -1,0 +1,43 @@
+<template>
+    <div class="container">
+        <div class="login-box">
+            <h1>Welcome to MyTime!</h1>
+
+            <button class="google-btn" onclick={handleLoginGoogle}>
+                <svg class="google-logo" viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M533.5 278.4c0-17.4-1.6-34.1-4.6-50.2H272v95h147.1c-6.4 34-25.7 62.7-54.7 82v68h88.4c51.8-47.7 81.7-118 81.7-194.8z" fill="#4285f4"/>
+                    <path d="M272 544.3c73.6 0 135.4-24.4 180.5-66.2l-88.4-68c-24.6 16.5-56 26.2-92.1 26.2-70.9 0-130.9-47.9-152.4-112.1h-89.9v70.4c45.1 88.6 137.5 149.7 242.3 149.7z" fill="#34a853"/>
+                    <path d="M119.6 324.2c-10.4-30.8-10.4-64.1 0-94.9v-70.4h-89.9C4.3 205.8 0 240.3 0 272s4.3 66.2 29.7 112.1l89.9-70.4z" fill="#fbbc04"/>
+                    <path d="M272 107.7c39.9 0 75.8 13.7 104.1 40.5l77.7-77.7C407.4 24.3 345.6 0 272 0 167.2 0 74.8 61.1 29.7 149.7l89.9 70.4c21.5-64.2 81.5-112.1 152.4-112.1z" fill="#ea4335"/>
+                </svg>
+                Log in with Google
+            </button>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <div class="login-form">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email"  onchange={handleEmailChange}/>
+
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" class="password" onchange={handlePasswordChange}/>
+                    <button class="toggle-password" onclick={togglePasswordVisibility} type="button">
+                        <svg if:false={showPassword} xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        <svg if:true={showPassword} xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.87 18.87 0 0 1 5.06-5.94M9.88 9.88A3 3 0 0 0 12 15a3 3 0 0 0 2.12-5.12"/>
+                            <path d="M1 1l22 22"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <button class="email-login-btn" onclick={handleLogin}>Log in with Email</button>
+            </div>
+        </div>
+    </div>
+</template>

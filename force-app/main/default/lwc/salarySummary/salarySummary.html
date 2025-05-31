@@ -1,0 +1,42 @@
+<template>
+    <div class="container">
+        <!-- Sidebar: Month List -->
+        <div class="sidebar">
+            <div class="header">MONTH</div>
+            <template for:each={salaries} for:item="record">
+                <div key={record.Id}
+                     class="row"
+                     data-id={record.Id}
+                     onclick={handleClick}>
+                    <span>{record.monthYear}</span>
+                    <span>{record.mtime__Final__c} USD</span>
+                </div>
+            </template>
+        </div>
+
+        <!-- Detail Section -->
+        <div class="details" if:true={selected}>
+            <h2 class="month-header">{selected.monthYear}</h2>
+            <div class="detail-row">
+                <span>Rate</span>
+                <span>{selected.mtime__Rate__c} USD</span>
+            </div>
+            <div class="detail-row">
+                <span>Compensation</span>
+                <span>{selected.mtime__Compensation__c} USD</span>
+            </div>
+            <div class="detail-row">
+                <span>Hours</span>
+                <span>{selected.mtime__Hours__c}</span>
+            </div>
+            <div class="detail-row">
+                <span>Taxes</span>
+                <span>{selected.mtime__Tax__c} USD</span>
+            </div>
+            <div class="detail-row final">
+                <span>Final</span>
+                <span>{selected.mtime__Final__c} USD</span>
+            </div>
+        </div>
+    </div>
+</template>

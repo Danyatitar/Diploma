@@ -1,0 +1,51 @@
+<template>
+    <lightning-card title="MyTime Settings">
+        <div class="slds-p-around_medium">
+            <lightning-input label="Days Off" type="number" name="mtime__Days_Off__c" value={settings.mtime__Days_Off__c} onchange={handleChange} required></lightning-input>
+            <lightning-input label="Hours per Week" type="number" name="mtime__Hours_per_week__c" value={settings.mtime__Hours_per_week__c} onchange={handleChange} required></lightning-input>
+            <lightning-input label="Illnesses" type="number" name="mtime__Illnesses__c" value={settings.mtime__Illnesses__c} onchange={handleChange} required></lightning-input>
+            <lightning-input label="Salary Day (Number)" type="number" name="mtime__Salary_Day_number_of_day__c" value={settings.mtime__Salary_Day_number_of_day__c} onchange={handleChange} required></lightning-input>
+            <lightning-input label="Taxes (%)" type="number" name="mtime__Taxes__c" value={settings.mtime__Taxes__c} onchange={handleChange} required></lightning-input>
+            <lightning-input label="Vacancies" type="number" name="mtime__Vacancies__c" value={settings.mtime__Vacancies__c} onchange={handleChange} required></lightning-input>
+            <lightning-input label="Budget" type="number" name="mtime__Budget__c" value={settings.mtime__Budget__c} onchange={handleChange} required></lightning-input>
+
+            <!-- Domain Tags -->
+            <!-- <template if:true={domains.length}>
+                <div class="slds-m-top_medium slds-m-bottom_small">
+                    <div class="slds-grid slds-wrap">
+                        <template for:each={domains} for:item="domain" for:index="index">
+                            <div key={domain} class="slds-pill_container slds-m-right_x-small slds-m-bottom_x-small">
+                                <span class="slds-pill" role="listitem">
+                                    <span class="slds-pill__label" title={domain}>{domain}</span>
+                                    <button class="slds-button slds-button_icon slds-pill__remove" title="Remove"
+                                            data-index={index} onclick={removeDomain}>
+                                        <lightning-icon icon-name="utility:close" size="xx-small" alternative-text="Remove"></lightning-icon>
+                                    </button>
+                                </span>
+                            </div>
+                        </template>
+                    </div>
+                </div> -->
+            <!-- </template> -->
+
+            <label class="slds-form-element__label">Domains</label>
+            <template if:true={domains.length}>
+                <div class="slds-m-bottom_small">
+                    <template for:each={domains} for:item="domain" for:index="index">
+                        <span key={domain} class="slds-badge slds-theme_success slds-m-right_x-small slds-m-bottom_x-small">
+                            {domain}
+                            <lightning-button-icon icon-name="utility:close" variant="bare" size="x-small" class="slds-m-left_x-small" onclick={removeDomain} data-index={index}></lightning-button-icon>
+                        </span>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Add Domain Input -->
+            <lightning-input label="Add Domain" name="newDomain" value={newDomain} onchange={handleNewDomainChange}></lightning-input>
+            <lightning-button label="Add Domain" class="slds-m-top_small" onclick={addDomain}></lightning-button>
+
+            <!-- Save Button -->
+            <lightning-button class="slds-m-top_medium" label="Save" variant="brand" onclick={handleSave}></lightning-button>
+        </div>
+    </lightning-card>
+</template>

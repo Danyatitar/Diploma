@@ -1,0 +1,65 @@
+<template>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">Submit Request</h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-input
+                        type="text"
+                        label="Subject"
+                        value={subject}
+                        onchange={handleSubjectChange}
+                        required>
+                    </lightning-input>
+
+                    <lightning-input
+                        type="date"
+                        label="Date"
+                        value={date}
+                        onchange={handleDateChange}
+                        min={today}
+                        required>
+                    </lightning-input>
+
+                    <lightning-input
+                        type="url"
+                        label="Link"
+                        value={link}
+                        onchange={handleLinkChange}
+                        required>
+                    </lightning-input>
+
+                    <lightning-input
+                        type="number"
+                        label="Budget"
+                        value={budget}
+                        onchange={handleBudgetChange}
+                        min="0"
+                        required>
+                    </lightning-input>
+
+                    <template if:true={errorMessage}>
+                        <p class="slds-text-color_error slds-m-top_small">{errorMessage}</p>
+                    </template>
+
+                    <template if:true={budgetErrorMessage}>
+                        <p class="slds-text-color_error slds-m-top_small">{budgetErrorMessage}</p>
+                    </template>
+
+                    <template if:true={unusedBudget}>
+                        <p class="slds-text-body_regular slds-m-top_small">
+                            Unused Budget: ${unusedBudget}
+                        </p>
+                    </template>
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="Cancel" onclick={closeModal}></lightning-button>
+                    <lightning-button variant="brand" label="Submit" onclick={handleSubmit} disabled={isInvalid}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

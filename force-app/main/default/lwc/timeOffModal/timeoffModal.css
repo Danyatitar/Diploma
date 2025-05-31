@@ -1,0 +1,11 @@
+:host {
+    display: block;
+}
+
+.slds-modal__content lightning-input {
+    margin-bottom: 1rem;
+}
+
+.slds-modal__content p {
+    margin-top: 1rem;
+}

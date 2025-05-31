@@ -1,0 +1,41 @@
+<template>
+    <lightning-card title="Employees Directory">
+
+        <template if:true={isHR}>
+            <lightning-button variant="neutral" label="Create" onclick={openModal}></lightning-button>
+
+        </template>
+
+
+        <div class="filters slds-p-around_medium">
+            <lightning-input label="Name" value={filters.name} onchange={handleInputChange} data-field="name"></lightning-input>
+            <lightning-input label="Role" value={filters.role} onchange={handleInputChange} data-field="role"></lightning-input>
+            <lightning-combobox label="Lead" value={filters.lead} options={leadOptions} onchange={handleInputChange} data-field="lead"></lightning-combobox>
+        </div>
+
+        <template if:true={users}>
+            <template for:each={users} for:item="user">
+                <div key={user.Id} class="slds-box slds-m-around_x-small" data-id={user.Id} onclick={handleUserClick}>
+                    <strong>{user.Name}</strong><br />
+                    <span class="slds-text-color_weak">{user.mtime__Role__c}</span><br />
+                    <div>Email: {user.mtime__Email__c}</div>
+                    <div>Lead: {user.mtime__Manager__r.Name}</div>
+                    <div>HR: {user.mtime__HR__r.Name}</div>
+                </div>
+            </template>
+        </template>
+
+        <div class="slds-m-around_medium">
+            <lightning-button label="Previous" onclick={handlePrev} disabled={isPreviousDisabled}></lightning-button>
+            <span class="slds-p-horizontal_medium">Page {pageNumber}</span>
+            <lightning-button label="Next" onclick={handleNext} disabled={isLastPage}></lightning-button>
+        </div>
+    </lightning-card>
+
+    <template if:true={isModalOpen}>
+        <c-user-form-modal
+            onclose={handleModalClose}
+            onconfirm={handleModalConfirm}>
+        </c-user-form-modal>
+    </template>
+</template>
